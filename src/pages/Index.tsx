@@ -42,9 +42,27 @@ export default function Index() {
   const [clickPower, setClickPower] = useState(1);
   const [totalClicks, setTotalClicks] = useState(0);
   const [showDisclaimer, setShowDisclaimer] = useState(true);
+  const [rebirths, setRebirths] = useState(0);
 
   const getUpgradeCost = () => {
     return clickPower * 10;
+  };
+
+  const getRebirthRequirement = () => {
+    return 1000 * (rebirths + 1);
+  };
+
+  const handleRebirth = () => {
+    if (totalClicks >= getRebirthRequirement()) {
+      setRebirths((prev) => prev + 1);
+      setClicks(0);
+      setClickPower(1);
+      setTotalClicks(0);
+      setHappiness(0);
+      toast.success(`Перерождение #${rebirths + 1} завершено! Новый уровень силы!`, {
+        duration: 3000,
+      });
+    }
   };
 
   const leaders: Leader[] = [
@@ -147,8 +165,14 @@ export default function Index() {
       <div className="container mx-auto px-4 py-8">
         <div className="text-center mb-8">
           <h1 className="text-5xl font-bold mb-2 bg-gradient-to-r from-blue-600 via-white to-red-600 bg-clip-text text-transparent">
-            Кликер Путина
+            Клик Путина
           </h1>
+          {rebirths > 0 && (
+            <Badge className="mb-2 bg-accent text-accent-foreground animate-pulse">
+              <Icon name="Star" size={14} className="mr-1" />
+              Перерождение: {rebirths}
+            </Badge>
+          )}
           <p className="text-lg text-muted-foreground">Чем больше кликов, тем больше радости! 🇷🇺</p>
         </div>
 
@@ -156,7 +180,7 @@ export default function Index() {
           <div className="lg:col-span-2 space-y-6">
             <Card className="p-8 bg-gradient-to-br from-blue-50 to-white border-2 border-primary/20">
               <div className="text-center space-y-6">
-                <div className="flex justify-around mb-6">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                   <div className="text-center">
                     <p className="text-sm text-muted-foreground mb-1">Всего кликов</p>
                     <p className="text-3xl font-bold text-primary">{clicks}</p>
@@ -168,6 +192,10 @@ export default function Index() {
                   <div className="text-center">
                     <p className="text-sm text-muted-foreground mb-1">Сила клика</p>
                     <p className="text-3xl font-bold text-secondary">{clickPower}</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-sm text-muted-foreground mb-1">Перерождений</p>
+                    <p className="text-3xl font-bold text-accent">{rebirths}</p>
                   </div>
                 </div>
 
@@ -210,10 +238,10 @@ export default function Index() {
                   />
                 </div>
 
-                <div className="mt-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                   <Button
                     variant="outline"
-                    className="w-full border-2 border-primary hover:bg-primary hover:text-primary-foreground disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="border-2 border-primary hover:bg-primary hover:text-primary-foreground disabled:opacity-50 disabled:cursor-not-allowed"
                     disabled={clicks < getUpgradeCost()}
                     onClick={() => {
                       const cost = getUpgradeCost();
@@ -225,7 +253,16 @@ export default function Index() {
                     }}
                   >
                     <Icon name="Zap" className="mr-2" />
-                    Усилить клик ({getUpgradeCost()} кликов)
+                    Усилить ({getUpgradeCost()})
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="border-2 border-accent hover:bg-accent hover:text-accent-foreground disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={totalClicks < getRebirthRequirement()}
+                    onClick={handleRebirth}
+                  >
+                    <Icon name="RefreshCw" className="mr-2" />
+                    Переродиться ({getRebirthRequirement()})
                   </Button>
                 </div>
               </div>
