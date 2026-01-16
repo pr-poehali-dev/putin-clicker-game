@@ -171,9 +171,16 @@ export default function Index() {
                   <Button
                     onClick={handleClick}
                     size="lg"
-                    className="w-64 h-64 rounded-full text-8xl bg-gradient-to-br from-blue-600 via-white to-red-600 hover:from-blue-700 hover:via-gray-100 hover:to-red-700 shadow-2xl border-4 border-accent transition-all duration-300 hover:scale-105 active:scale-95 animate-pulse-glow relative overflow-hidden"
+                    className="w-64 h-64 rounded-full bg-gradient-to-br from-blue-600 via-white to-red-600 hover:from-blue-700 hover:via-gray-100 hover:to-red-700 shadow-2xl border-4 border-accent transition-all duration-300 hover:scale-105 active:scale-95 animate-pulse-glow relative overflow-hidden p-0"
                   >
-                    <span className="relative z-10">{getHappinessEmoji()}</span>
+                    <img 
+                      src="https://cdn.poehali.dev/projects/a5da1824-68a3-475c-9528-a7f6186fcc25/files/35340cdc-b099-436e-b681-d304697b2578.jpg"
+                      alt="Putin"
+                      className="w-full h-full object-cover rounded-full relative z-10"
+                      style={{
+                        filter: `brightness(${1 + happiness / 200}) saturate(${1 + happiness / 100})`,
+                      }}
+                    />
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shine" />
                   </Button>
 
