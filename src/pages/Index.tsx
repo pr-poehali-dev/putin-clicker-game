@@ -43,6 +43,10 @@ export default function Index() {
   const [totalClicks, setTotalClicks] = useState(0);
   const [showDisclaimer, setShowDisclaimer] = useState(true);
 
+  const getUpgradeCost = () => {
+    return clickPower * 10;
+  };
+
   const leaders: Leader[] = [
     { rank: 1, name: 'Патриот2024', clicks: 15420, avatar: '🇷🇺' },
     { rank: 2, name: 'ВладимирВ', clicks: 12350, avatar: '⭐' },
@@ -206,29 +210,22 @@ export default function Index() {
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 mt-6">
+                <div className="mt-6">
                   <Button
                     variant="outline"
-                    className="border-2 border-primary hover:bg-primary hover:text-primary-foreground"
+                    className="w-full border-2 border-primary hover:bg-primary hover:text-primary-foreground disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={clicks < getUpgradeCost()}
                     onClick={() => {
-                      setClickPower((prev) => prev + 1);
-                      toast.success(`Сила клика увеличена до ${clickPower + 1}!`);
+                      const cost = getUpgradeCost();
+                      if (clicks >= cost) {
+                        setClicks((prev) => prev - cost);
+                        setClickPower((prev) => prev + 1);
+                        toast.success(`Сила клика увеличена до ${clickPower + 1}!`);
+                      }
                     }}
                   >
                     <Icon name="Zap" className="mr-2" />
-                    Усилить клик
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="border-2 border-accent hover:bg-accent hover:text-accent-foreground"
-                    onClick={() => {
-                      setClicks(0);
-                      setHappiness(0);
-                      toast.info('Счётчик сброшен!');
-                    }}
-                  >
-                    <Icon name="RotateCcw" className="mr-2" />
-                    Сбросить
+                    Усилить клик ({getUpgradeCost()} кликов)
                   </Button>
                 </div>
               </div>
