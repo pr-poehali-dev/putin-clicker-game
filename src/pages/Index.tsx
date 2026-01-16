@@ -5,6 +5,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
 import { toast } from 'sonner';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 
 interface Particle {
   id: number;
@@ -32,6 +41,7 @@ export default function Index() {
   const [particles, setParticles] = useState<Particle[]>([]);
   const [clickPower, setClickPower] = useState(1);
   const [totalClicks, setTotalClicks] = useState(0);
+  const [showDisclaimer, setShowDisclaimer] = useState(true);
 
   const leaders: Leader[] = [
     { rank: 1, name: 'Патриот2024', clicks: 15420, avatar: '🇷🇺' },
@@ -103,7 +113,35 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-red-50">
+    <>
+      <AlertDialog open={showDisclaimer} onOpenChange={setShowDisclaimer}>
+        <AlertDialogContent className="max-w-md">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-2xl text-center">⚠️ Дисклеймер</AlertDialogTitle>
+            <AlertDialogDescription className="text-base space-y-3 pt-2">
+              <p className="text-center">
+                Это развлекательная игра-кликер, созданная исключительно в юмористических целях.
+              </p>
+              <p className="text-center">
+                Игра не преследует политических целей и не призывает к каким-либо действиям.
+              </p>
+              <p className="text-center font-semibold">
+                Играя, вы принимаете условия использования и подтверждаете, что понимаете развлекательный характер контента.
+              </p>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="sm:justify-center">
+            <AlertDialogAction
+              onClick={() => setShowDisclaimer(false)}
+              className="w-full bg-primary hover:bg-primary/90"
+            >
+              Понятно, начать игру
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-red-50">
       <div className="container mx-auto px-4 py-8">
         <div className="text-center mb-8">
           <h1 className="text-5xl font-bold mb-2 bg-gradient-to-r from-blue-600 via-white to-red-600 bg-clip-text text-transparent">
@@ -328,5 +366,6 @@ export default function Index() {
         </div>
       </div>
     </div>
+    </>
   );
 }
