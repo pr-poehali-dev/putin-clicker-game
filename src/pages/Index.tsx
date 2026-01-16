@@ -118,16 +118,14 @@ export default function Index() {
         <AlertDialogContent className="max-w-md">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-2xl text-center">⚠️ Дисклеймер</AlertDialogTitle>
-            <AlertDialogDescription className="text-base space-y-3 pt-2">
-              <p className="text-center">
-                Это развлекательная игра-кликер, созданная исключительно в юмористических целях.
-              </p>
-              <p className="text-center">
-                Игра не преследует политических целей и не призывает к каким-либо действиям.
-              </p>
-              <p className="text-center font-semibold">
+            <AlertDialogDescription className="text-base pt-2 text-center">
+              Это развлекательная игра-кликер, созданная исключительно в юмористических целях.
+              <br /><br />
+              Игра не преследует политических целей и не призывает к каким-либо действиям.
+              <br /><br />
+              <span className="font-semibold">
                 Играя, вы принимаете условия использования и подтверждаете, что понимаете развлекательный характер контента.
-              </p>
+              </span>
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="sm:justify-center">
